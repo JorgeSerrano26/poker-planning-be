@@ -13,6 +13,7 @@ export type Card = {
 export type User = {
 	userName: string;
 	id: string;
+	image: string;
 };
 
 export type Vote = {
