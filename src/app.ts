@@ -13,9 +13,23 @@ import {
 	leaveRoom,
 	resetVotes,
 } from "./handlers/index";
+import DB from "./DB";
 
 const app = express();
 app.use(cors()); // Add cors middleware
+
+// Security?
+app.get("/api/room/:roomId", async (req, res) => {
+	const roomId = req.params.roomId;
+
+	const room = await DB.getRoom(roomId);
+
+	if (!room) {
+		res.status(404).send("Room not found");
+		return;
+	}
+	res.json(room);
+});
 
 const server = http.createServer(app);
 
