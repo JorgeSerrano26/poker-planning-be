@@ -11,7 +11,7 @@ export default (socket: Socket) =>
 
 		DB.removeUserFromRoom(user.id, roomId);
 
-		socket.to(roomId).emit("user_left", { userId: user.id });
+		socket.to(roomId).emit("user_left", user);
 		socket.leave(roomId);
 		console.log(`User ${user.id} left the room ${roomId}`);
 	};

@@ -37,8 +37,9 @@ class DB {
 
 	public removeUserFromRoom(userId: string, room: string) {
 		const index = this.rooms[room].users.findIndex((u) => u.id === userId);
-
+		const user = this.rooms[room].users[index];
 		this.rooms[room].users.splice(index, 1);
+		return user;
 	}
 
 	resetVotes(roomId: string) {
