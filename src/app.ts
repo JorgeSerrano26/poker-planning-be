@@ -43,7 +43,7 @@ const io = new Server(server, {
 	},
 });
 
-enum AppEvents {
+export enum AppEvents {
 	create_room = "create_room",
 	join_room = "join_room",
 	leave_room = "leave_room",
@@ -55,6 +55,7 @@ enum AppEvents {
 	select_card = "select_card",
 }
 
+// Refactor this
 io.on("connection", (socket) => {
 	console.log(`Socket connected ${socket.id}`);
 

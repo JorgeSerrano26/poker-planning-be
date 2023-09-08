@@ -1,7 +1,6 @@
 import { Socket } from "socket.io";
 import DB from "~/DB";
 import { User } from "~/types";
-import cards from "~/cards";
 
 type Data = {
 	user: User;
@@ -22,14 +21,9 @@ export default (socket: Socket) => (data: Data) => {
 
 	socket.join(roomId);
 
-	const { users, votes } = DB.getRoom(roomId);
+	const room = DB.getRoom(roomId);
 
-	socket.emit("joined", {
-		cards,
-		users,
-		votes,
-		showCards: false,
-	});
+	socket.emit("joined", room);
 
 	console.log(`User ${user.id} joined room ${roomId}`);
 };

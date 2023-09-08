@@ -13,6 +13,8 @@ export default (socket: Socket) => ({ roomId }: Data) => {
 
 	DB.revealVotes(roomId);
 
-	socket.to(roomId).emit("reveal_votes");
-	socket.emit("reveal_votes");
+	const votesAverage = DB.getVotesAverage(roomId);
+
+	socket.to(roomId).emit("reveal_votes", { votesAverage });
+	socket.emit("reveal_votes", { votesAverage });
 };

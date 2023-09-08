@@ -27,4 +27,6 @@ export type Room = {
 	users: User[];
 	showVotes: boolean;
 	votes: Vote[];
+	votesAverage: number;
+	cards: Card[];
 };

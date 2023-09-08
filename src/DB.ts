@@ -1,4 +1,4 @@
-import { vote } from "./handlers";
+import cards from "./cards";
 import { Room, User } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,6 +14,8 @@ class DB {
 				users: [],
 				votes: [],
 				showVotes: false,
+				votesAverage: 0,
+				cards,
 			};
 		}
 
@@ -42,10 +44,26 @@ class DB {
 	resetVotes(roomId: string) {
 		this.rooms[roomId].votes = [];
 		this.rooms[roomId].showVotes = false;
+		this.rooms[roomId].votesAverage = 0;
 	}
 
 	public revealVotes(roomId: string) {
 		this.rooms[roomId].showVotes = true;
+	}
+
+	public getVotesAverage(roomId: string) {
+		const votesAverage =
+			this.rooms[roomId].votes.reduce((acc, vote) => {
+				const card = this.rooms[roomId].cards.find(
+					(card) => card.id === vote.cardId,
+				);
+				const voteValue = card?.value ?? 0;
+				return acc + voteValue;
+			}, 0) / this.rooms[roomId].votes.length;
+
+		this.rooms[roomId].votesAverage = votesAverage;
+
+		return votesAverage;
 	}
 
 	public addVote(userId: string, cardId: number, room: string) {
